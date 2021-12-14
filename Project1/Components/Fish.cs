@@ -41,7 +41,7 @@ namespace Project1.Components
 
         public Rectangle Rectangle
         {
-            get { return new Rectangle((int)positie.X, (int)positie.Y, fishTexture.Width, fishTexture.Height); }
+            get { return new Rectangle((int)positie.X, (int)positie.Y, 80, 60); }
         }
 
         public void Update(GameTime gameTime)

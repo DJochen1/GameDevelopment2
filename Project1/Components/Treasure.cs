@@ -10,10 +10,12 @@ using Project1.Input;
 
 namespace Project1.Components
 {
-    class Treasure : IGameObject  
+    public class Treasure : IGameObject  
     {
         private Texture2D schatTexture;
         public Vector2 schatPositie;
+
+        public bool remove = false;
 
         Random rnd = new Random();
 
@@ -25,8 +27,13 @@ namespace Project1.Components
             schatPositie = new Vector2(0, 0);
 
             schatPositie.X = rnd.Next(200, 5800);
-            schatPositie.Y = rnd.Next(0, 450);
+            schatPositie.Y = rnd.Next(0, 400);
             schatPositie = JuistePositie(schatPositie);
+        }
+
+        public Rectangle Rectangle
+        {
+            get { return new Rectangle((int)schatPositie.X, (int)schatPositie.Y, 100, 100); }
         }
 
         public Vector2 JuistePositie(Vector2 positie)
@@ -35,10 +42,12 @@ namespace Project1.Components
                 positie.X = rnd.Next(1000, 5800);
             return positie;
         }
+
         public void Update(GameTime gameTime)
         {
-
+            
         }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {

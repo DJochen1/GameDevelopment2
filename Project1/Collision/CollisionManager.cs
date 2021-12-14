@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Project1.Collision
 {
-    class CollisionManager
+    public class CollisionManager
     {
         public bool CheckCollision(Rectangle rect1, Rectangle rect2)
         {

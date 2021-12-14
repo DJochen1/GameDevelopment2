@@ -22,7 +22,7 @@ namespace Project1
 
         private Texture2D vis;
 
-        Fish fish;
+        private Fish fish;
 
         private Texture2D krab;
 
@@ -52,13 +52,12 @@ namespace Project1
 
         private List<Background> background;
 
+        private SchatkistCollision collision;
+
         public static int Hoogte;
 
         public static int Breedte;
 
-        //CollisionManager collisionManager;
-
-        private bool touch = false;
         
 
 
@@ -75,6 +74,8 @@ namespace Project1
 
             Hoogte = _graphics.PreferredBackBufferWidth;
             Breedte = _graphics.PreferredBackBufferWidth;
+
+            collision = new SchatkistCollision();
 
             base.Initialize();
         }
@@ -130,7 +131,7 @@ namespace Project1
             anker = new Anker(ancher);
 
             treasure = new List<Treasure>();
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 12; i++)
             {
                 treasure.Add(new Treasure(schat));             
             }
@@ -173,7 +174,11 @@ namespace Project1
 
             _camera.Volgen(fish);
 
-
+            collision.Collision(treasure, fish);
+            foreach (var t in treasure)
+                if (t.remove)
+                    t.schatPositie = new Vector2(-100, 0); //TODO schat verwijderen uit de Game. Nu word de positie ingesteld zodanig dat de schat niet zichtbaar is in het spel
+            
             base.Update(gameTime);
         }
 
