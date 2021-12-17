@@ -11,7 +11,7 @@ using Project1.Input;
 
 namespace Project1.Components.Enemys
 {
-    class crab : IGameObject
+    public class crab : IGameObject
     {
         private Texture2D crabTexture;
         private Animatie crabAnimatie;
@@ -43,7 +43,7 @@ namespace Project1.Components.Enemys
 
         public Rectangle Rectangle
         {
-            get { return new Rectangle((int)crabPositie.X, (int)crabPositie.Y, crabTexture.Width, crabTexture.Height); }
+            get { return new Rectangle((int)crabPositie.X, (int)crabPositie.Y, 100, 100); }
         }
 
         private void Move()

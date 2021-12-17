@@ -10,11 +10,11 @@ using Project1.Input;
 
 namespace Project1.Components.Enemys
 {
-    class Jellyfish : IGameObject
+    public class Jellyfish : IGameObject
     {
         private Texture2D kwalTexture;
         private Animatie kwalAnimatie;
-        public Vector2 kwalPositie;
+        public Vector2 kwalPositie { get; set; }
         private Vector2 crabSnelheid;
 
         public Jellyfish(Texture2D texture)
@@ -43,7 +43,7 @@ namespace Project1.Components.Enemys
 
         public Rectangle Rectangle
         {
-            get { return new Rectangle((int)kwalPositie.X, (int)kwalPositie.Y, kwalTexture.Width, kwalTexture.Height); }
+            get { return new Rectangle((int)kwalPositie.X, (int)kwalPositie.Y, 80, 100); }
         }
 
         private void Move()

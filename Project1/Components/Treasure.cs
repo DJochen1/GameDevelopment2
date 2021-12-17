@@ -33,7 +33,7 @@ namespace Project1.Components
 
         public Rectangle Rectangle
         {
-            get { return new Rectangle((int)schatPositie.X, (int)schatPositie.Y, 100, 100); }
+            get { return new Rectangle((int)schatPositie.X, (int)schatPositie.Y, 80, 80); }
         }
 
         public Vector2 JuistePositie(Vector2 positie)

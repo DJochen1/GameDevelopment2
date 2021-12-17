@@ -34,7 +34,7 @@ namespace Project1
 
         private Texture2D kwal;
 
-        Jellyfish jellyfish;
+        private List<Jellyfish> jellyfish;
 
         private Texture2D ancher;
 
@@ -52,7 +52,8 @@ namespace Project1
 
         private List<Background> background;
 
-        private SchatkistCollision collision;
+        private SchatkistCollision SCollision;
+        private EnemyCollision ECollision;
 
         public static int Hoogte;
 
@@ -75,7 +76,8 @@ namespace Project1
             Hoogte = _graphics.PreferredBackBufferWidth;
             Breedte = _graphics.PreferredBackBufferWidth;
 
-            collision = new SchatkistCollision();
+            SCollision = new SchatkistCollision();
+            ECollision = new EnemyCollision();
 
             base.Initialize();
         }
@@ -126,7 +128,32 @@ namespace Project1
 
             diver = new Diver(duiker);
 
-            jellyfish = new Jellyfish(kwal);
+            jellyfish = new List<Jellyfish>()
+            {
+                new Jellyfish(kwal)
+                {
+                    kwalPositie = new Vector2 (2750, 0)
+                },
+                new Jellyfish(kwal)
+                {
+                    kwalPositie = new Vector2 (3500, 0)
+                },
+                new Jellyfish(kwal)
+                {
+                    kwalPositie = new Vector2 (4250, 0)
+                },
+                new Jellyfish(kwal)
+                {
+                    kwalPositie = new Vector2 (5000, 0)
+                },
+                new Jellyfish(kwal)
+                {
+                    kwalPositie = new Vector2 (5750, 0)
+                }
+
+            };
+            
+            
 
             anker = new Anker(ancher);
 
@@ -158,6 +185,9 @@ namespace Project1
             foreach (var a in treasure)
                 a.Update(gameTime);
 
+            foreach (var a in jellyfish)
+                a.Update(gameTime);
+
             fish.Update(gameTime);
 
             Crab.Update(gameTime);
@@ -166,19 +196,30 @@ namespace Project1
 
             diver.Update(gameTime);
 
-            jellyfish.Update(gameTime);
-
             Finish.Update(gameTime);
 
             anker.Update(gameTime);
 
             _camera.Volgen(fish);
 
-            collision.Collision(treasure, fish);
-            foreach (var t in treasure)
-                if (t.remove)
-                    t.schatPositie = new Vector2(-100, 0); //TODO schat verwijderen uit de Game. Nu word de positie ingesteld zodanig dat de schat niet zichtbaar is in het spel
-            
+            SCollision.Collision(treasure, fish);
+            for (int i = 0; i < treasure.Count; i++)
+            {
+                if (treasure[i].remove)
+                {
+                    treasure.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            ECollision.TouchAnkerCheck(anker, fish);
+            ECollision.TouchCrabCheck(Crab, fish);
+            ECollision.TouchDiverCheck(diver, fish);
+            ECollision.TouchJellyFishCheck(jellyfish, fish);
+            if (fish.death)
+                fish.positie = new Vector2(151, 50); //als de vis dood is gaat hij terug naar de startpositie. Dit kan nog aangepast worden
+                fish.death = false;
+
             base.Update(gameTime);
         }
 
@@ -195,6 +236,9 @@ namespace Project1
             foreach (var a in treasure)
                 a.Draw(_spriteBatch);
 
+            foreach (var a in jellyfish)
+                a.Draw(_spriteBatch);
+
             Finish.Draw(_spriteBatch);
 
             fish.Draw(_spriteBatch);
@@ -202,8 +246,6 @@ namespace Project1
             Crab.Draw(_spriteBatch);
 
             diver.Draw(_spriteBatch);
-
-            jellyfish.Draw(_spriteBatch);
 
             anker.Draw(_spriteBatch);
 

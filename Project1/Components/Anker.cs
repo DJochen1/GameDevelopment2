@@ -11,7 +11,7 @@ using Project1.Input;
 
 namespace Project1.Components
 {
-    class Anker : IGameObject
+    public class Anker : IGameObject
     {
         private Texture2D AnkerTexture;
         public Vector2 AnkerPositie;
@@ -26,7 +26,7 @@ namespace Project1.Components
 
         public Rectangle Rectangle
         {
-            get { return new Rectangle((int)AnkerPositie.X, (int)AnkerPositie.Y, AnkerTexture.Width, AnkerTexture.Height); }
+            get { return new Rectangle((int)AnkerPositie.X, (int)AnkerPositie.Y, 45, 350); }
         }
 
         public void Update(GameTime gameTime)

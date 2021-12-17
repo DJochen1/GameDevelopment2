@@ -15,6 +15,7 @@ namespace Project1.Components
         private Texture2D fishTexture;
         private Animatie animatie;
         public Vector2 positie;
+        public bool death = false;
         //private Vector2 snelheid;
         //private Vector2 versnelling;
         //private Vector2 mouseVector;

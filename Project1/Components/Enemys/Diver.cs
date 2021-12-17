@@ -10,7 +10,7 @@ using Project1.Input;
 
 namespace Project1.Components.Enemys
 {
-    class Diver : IGameObject
+    public class Diver : IGameObject
     {
         private Texture2D diverTexture;
         private Animatie diverAnimatie;
@@ -41,7 +41,7 @@ namespace Project1.Components.Enemys
 
         public Rectangle Rectangle
         {
-            get { return new Rectangle((int)diverPositie.X, (int)diverPositie.Y, diverTexture.Width, diverTexture.Height); }
+            get { return new Rectangle((int)diverPositie.X, (int)diverPositie.Y, 150, 80); }
         }
 
         private void Move(Vector2 richting)
