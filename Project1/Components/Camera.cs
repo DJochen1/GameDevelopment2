@@ -18,7 +18,7 @@ namespace Project1.Components
         {
             var positie = Matrix.CreateTranslation(-vis.positie.X - (vis.Rectangle.Width * 3.1f), -400, 0);
 
-            var verandering = Matrix.CreateTranslation(Game.Hoogte / 2,Game.Breedte / 2, 0);
+            var verandering = Matrix.CreateTranslation(/*Game.Hoogte*/ Game.screenHeight/ 2,/*Game.Breedte */ Game.screenWidth/ 2, 0);
 
             Volg = positie * verandering;
         }
