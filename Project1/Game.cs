@@ -19,9 +19,11 @@ namespace Project1
     {
         MainMenu,
         Level1,
+        Level2,
         HighScore,
         PauseMenu,
         Loser,
+        VictoryLevel1,
         Victory,
         End,
     }  
@@ -63,6 +65,9 @@ namespace Project1
         private Texture2D menuAchtergrond;
         public MenuBackground menuBackground;
 
+        private Texture2D winnaarLevel1;
+        public MenuBackground winnerLevel1;
+
         private Texture2D winnerAchtergrond;
         public MenuBackground winnerBackground;
 
@@ -89,6 +94,7 @@ namespace Project1
 
         private Button buttonPlay;
         private Button buttonQuit;
+        private Button buttonNext;
         private Button pauseButton;      
 
 
@@ -124,11 +130,11 @@ namespace Project1
             buttonPlay = new Button(Content.Load<Texture2D>("button"), _graphics.GraphicsDevice);
             buttonPlay.SetPosition(new Vector2(screenWidth/2-50, screenHeight/2-100));
 
+            buttonNext = new Button(Content.Load<Texture2D>("NextLevel"), _graphics.GraphicsDevice);
+            buttonNext.SetPosition(new Vector2(150, 200));
+
             buttonQuit = new Button(Content.Load<Texture2D>("Quit"), _graphics.GraphicsDevice);
             buttonQuit.SetPosition(new Vector2(screenWidth / 2-50, screenHeight / 2 + 66));
-            // -150 omdat ik de button op  300x300 heb gezet en om die in het midden te krijgen moet je daar de helft van af nemen
-            //om een of andere reden als je (bij height) +200 doet gaat ie naar beneden, maar als je -200 doet gaat ie naar boven
-            // bij width werkt + en - wel zoals je zou verwachten
 
             pauseButton = new Button(Content.Load<Texture2D>("Pause"), _graphics.GraphicsDevice);
             pauseButton.SetPosition(new Vector2(screenWidth-300 , screenHeight/2 -500));
@@ -165,6 +171,9 @@ namespace Project1
             Texture2D _menuAchtergrond = Content.Load<Texture2D>("MainMenu");
             menuAchtergrond = _menuAchtergrond;
 
+            Texture2D _winnaarlevel1 = Content.Load<Texture2D>("Level1Cleared");
+            winnaarLevel1 = _winnaarlevel1;
+
             Texture2D _winnerAchtergrond = Content.Load<Texture2D>("LevelCleared");
             winnerAchtergrond = _winnerAchtergrond;
 
@@ -178,6 +187,8 @@ namespace Project1
         private void InitializeGameObjects()
         {
             menuBackground = new MenuBackground(menuAchtergrond);
+
+            winnerLevel1 = new MenuBackground(winnaarLevel1);
 
             winnerBackground = new MenuBackground(winnerAchtergrond);
 
@@ -215,13 +226,12 @@ namespace Project1
                 }
 
             };
-            
-            
+
 
             anker = new Anker(ancher);
 
             treasure = new List<Treasure>();
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 24; i++)
             {
                 treasure.Add(new Treasure(schat));             
             }
@@ -288,8 +298,10 @@ namespace Project1
                     foreach (var a in background)
                         a.Update(gameTime);
 
-                    foreach (var a in treasure)
-                        a.Update(gameTime);
+                    for (int i = 0; i < 12; i++)
+                    {
+                        treasure[i].Update(gameTime);
+                    }
 
                     foreach (var a in jellyfish)
                         a.Update(gameTime);
@@ -344,10 +356,93 @@ namespace Project1
                     
                     if (SCollision.punten == 12 && fish.positie.X > 6050)
                     {
-                        currentGameState = GameState.Victory;
+                        currentGameState = GameState.VictoryLevel1;
                     }
                     
    
+
+                    break;
+                case GameState.Level2:
+                    if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift))
+                    {
+                        IsMouseVisible = true;
+                        //Zodat de muis niet visible is tijdens het spelen, alleen wanneer de shift key wordt ingedrukt
+
+                        if (pauseButton.isClicked && (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift)
+                            || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift)))
+                        {
+                            currentGameState = GameState.PauseMenu;
+                        }
+                        pauseButton.Update(mouse);
+                    }
+                    else IsMouseVisible = false;
+                    if (fish.positie.X > 6049)
+                        fish.positie = new Vector2(151, 50);
+                    foreach (var a in background)
+                        a.Update(gameTime);
+
+                    for (int i = 12; i < 24; i++)
+                    {
+                        treasure[i].Update(gameTime);
+                    }
+
+                    foreach (var a in jellyfish)
+                        a.Update(gameTime);
+
+                    foreach (var a in lifes)
+                    {
+                        a.Update(gameTime);
+                        a.hartPositie.X = fish.positie.X - 71;
+                    }
+
+
+                    fish.Update(gameTime);
+
+                    Crab.Update(gameTime);
+
+                    diver.GetFishPositie(fish.positie);
+
+                    diver.Update(gameTime);
+
+                    Finish.Update(gameTime);
+
+                    anker.Update(gameTime);
+
+                    _camera.Volgen(fish);
+
+                    SCollision.Collision(treasure, fish);
+                    for (int i = 0; i < treasure.Count; i++)
+                    {
+                        if (treasure[i].remove)
+                        {
+                            treasure.RemoveAt(i);
+                            i--;
+                        }
+                    }
+
+                    ECollision.TouchAnkerCheck(anker, fish);
+                    ECollision.TouchCrabCheck(Crab, fish);
+                    ECollision.TouchDiverCheck(diver, fish);
+                    ECollision.TouchJellyFishCheck(jellyfish, fish);
+                    if (fish.death)
+                    {
+                        fish.positie = new Vector2(151, 50);
+                        fish.levens += -1;
+                        lifes.RemoveAt(fish.levens);
+                        if (fish.levens == 0)
+                        {
+                            currentGameState = GameState.Loser;
+                        }
+                        fish.death = false;
+                    }
+
+
+                    if (SCollision.punten == 24 && fish.positie.X > 6049)
+                    {
+                        currentGameState = GameState.Victory;
+                    }
+
+
 
                     break;
                 case GameState.PauseMenu:
@@ -356,6 +451,21 @@ namespace Project1
                         Exit();
                     }
                     buttonQuit.Update(mouse);
+                    break;
+                case GameState.VictoryLevel1:
+                    IsMouseVisible = true;
+                    if (buttonNext.isClicked)
+                    {
+                        currentGameState = GameState.Level2;
+                    }
+                    buttonNext.Update(mouse);
+
+                    if (buttonQuit.isClicked)
+                    {
+                        Exit();
+                    }
+                    buttonQuit.Update(mouse);
+
                     break;
                 case GameState.Victory:
                     if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter))
@@ -399,8 +509,10 @@ namespace Project1
                     foreach (var a in background)
                     a.Draw(_spriteBatch);
 
-                    foreach (var a in treasure)
-                        a.Draw(_spriteBatch);
+                    for (int i = 0; i < 12; i++)
+                    {
+                        treasure[i].Draw(_spriteBatch);
+                    }
 
                     foreach (var a in jellyfish)
                         a.Draw(_spriteBatch);
@@ -424,10 +536,48 @@ namespace Project1
                     
                     pauseButton.Draw(_spriteBatch);
                     break;
+                case GameState.Level2:
+                    _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Volg);
+
+                    foreach (var a in background)
+                        a.Draw(_spriteBatch);
+
+                    for (int i = 12; i < 24; i++)
+                    {
+                        treasure[i].Draw(_spriteBatch);
+                    }
+
+                    foreach (var a in jellyfish)
+                        a.Draw(_spriteBatch);
+
+                    foreach (var a in lifes)
+                        a.Draw(_spriteBatch);
+
+                    Finish.Draw(_spriteBatch);
+
+                    fish.Draw(_spriteBatch);
+                    //fish.positie = new Vector2 (151,50);
+
+                    Crab.Draw(_spriteBatch);
+
+                    diver.Draw(_spriteBatch);
+
+                    anker.Draw(_spriteBatch);
+
+                    Finish.Draw(_spriteBatch);
+
+                    _spriteBatch.End();
+                    break;
                 case GameState.PauseMenu:
                     menuBackground.Draw(_spriteBatch);
                     buttonQuit.SetPosition(new Vector2(screenWidth / 2 -150, screenHeight / 2-150 ));
                     buttonQuit.Draw(_spriteBatch);
+                    break;
+                case GameState.VictoryLevel1:
+                    winnerLevel1.Draw(_spriteBatch);
+                    buttonNext.Draw(_spriteBatch);
+                    buttonQuit.Draw(_spriteBatch);
+                    buttonQuit.SetPosition(new Vector2(400, 200));
                     break;
                 case GameState.Victory:
                     winnerBackground.Draw(_spriteBatch);
