@@ -58,48 +58,8 @@ namespace Project1.Components
             animatie.Update(gameTime);   
         }
 
-        /* deze code dient ervoor om de vis met de muis te laten bewegen. deze gebruik ik niet
-        private Vector2 GetMouseState()
-        {
-            MouseState state = Mouse.GetState();
-            mouseVector = new Vector2(state.X, state.Y);
-            return mouseVector;
-        }
-        
-        private void Move(Vector2 mouse)
-        {
-            var direction = Vector2.Add(mouse, -positie);
-            direction.Normalize();
-            direction = Vector2.Multiply(direction, 0.5f);
 
-            snelheid += direction;
-            snelheid = Limit(snelheid, 5);
-            positie += snelheid;
 
-            if (positie.X > 600 || positie.X < 0)
-            {
-                snelheid.X *= -1;
-                versnelling.X *= -1;
-            }
-            if (positie.Y > 400 || positie.X < 0)
-            {
-                snelheid.Y *= -1;
-                versnelling.Y *= -1;
-                
-            }
-        }
-
-        private Vector2 Limit(Vector2 v, float max)
-        {
-            if (v.Length() > max)
-            {
-                var ratio = max / v.Length();
-                v.X *= ratio;
-                v.Y *= ratio;
-            }
-            return v;
-        }
-        */
 
 
         // onderstaande methode zorgt ervoor dat de vis niet verder gaat dan maximaal opgegeven

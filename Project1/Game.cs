@@ -340,14 +340,20 @@ namespace Project1
                         }
                         fish.death = false;
                     }
+
+                    
+                    if (SCollision.punten == 12 && fish.positie.X > 6050)
+                    {
+                        currentGameState = GameState.Victory;
+                    }
+                    
    
 
                     break;
                 case GameState.PauseMenu:
                     if (buttonQuit.isClicked)
                     {
-                        //currentGameState = GameState.End;
-                        currentGameState = GameState.Loser; //for testing purposes
+                        Exit();
                     }
                     buttonQuit.Update(mouse);
                     break;

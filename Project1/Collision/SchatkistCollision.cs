@@ -14,7 +14,7 @@ namespace Project1.Collision
     public class SchatkistCollision : CollisionManager
     {
 
-        public int punten;
+        public int punten = 0;
 
 
         public void Collision(List<Treasure> schatten, Fish fish)
@@ -22,7 +22,7 @@ namespace Project1.Collision
             foreach (var kist in schatten)
                 if (CheckCollision(kist.Rectangle, fish.Rectangle))
                 {
-                    punten++;
+                    punten += 1;
                     kist.remove = true;
                 }
 
