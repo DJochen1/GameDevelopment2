@@ -51,6 +51,9 @@ namespace Project1
         private Texture2D schat;
         private List<Treasure> treasure;
 
+        private Texture2D levens;
+        private List<Lifes> lifes;
+
         private Texture2D lijn;
         FinishLine Finish;
 
@@ -147,6 +150,9 @@ namespace Project1
             Texture2D _schat = Content.Load<Texture2D>("treasure2");
             schat = _schat;
 
+            Texture2D _levens = Content.Load<Texture2D>("hart2");
+            levens = _levens;
+
             Texture2D _ancher = Content.Load<Texture2D>("anker");
             ancher = _ancher;
 
@@ -220,6 +226,12 @@ namespace Project1
                 treasure.Add(new Treasure(schat));             
             }
 
+            lifes = new List<Lifes>();
+            for (int i = 0; i < 5; i++)
+            {
+                lifes.Add(new Lifes(levens, new Vector2 (80, (i * 50)+50)));
+            }
+
             background = new List<Background>();
 
             for (int i = 0; i < 10; i++)
@@ -282,6 +294,13 @@ namespace Project1
                     foreach (var a in jellyfish)
                         a.Update(gameTime);
 
+                    foreach (var a in lifes)
+                    {
+                        a.Update(gameTime);
+                        a.hartPositie.X = fish.positie.X - 71;
+                    }
+
+                    
                     fish.Update(gameTime);
 
                     Crab.Update(gameTime);
@@ -314,6 +333,7 @@ namespace Project1
                     {
                         fish.positie = new Vector2(151, 50);
                         fish.levens += -1;
+                        lifes.RemoveAt(fish.levens);
                         if (fish.levens == 0)
                         {
                             currentGameState = GameState.Loser;
@@ -377,6 +397,9 @@ namespace Project1
                         a.Draw(_spriteBatch);
 
                     foreach (var a in jellyfish)
+                        a.Draw(_spriteBatch);
+
+                    foreach (var a in lifes)
                         a.Draw(_spriteBatch);
 
                     Finish.Draw(_spriteBatch);
