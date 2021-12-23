@@ -311,8 +311,17 @@ namespace Project1
                     ECollision.TouchDiverCheck(diver, fish);
                     ECollision.TouchJellyFishCheck(jellyfish, fish);
                     if (fish.death)
-                        fish.positie = new Vector2(151, 50); //als de vis dood is gaat hij terug naar de startpositie. Dit kan nog aangepast worden
-                        fish.death = false;          
+                    {
+                        fish.positie = new Vector2(151, 50);
+                        fish.levens += -1;
+                        if (fish.levens == 0)
+                        {
+                            currentGameState = GameState.Loser;
+                        }
+                        fish.death = false;
+                    }
+   
+
                     break;
                 case GameState.PauseMenu:
                     if (buttonQuit.isClicked)
