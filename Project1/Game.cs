@@ -52,6 +52,7 @@ namespace Project1
 
         private Texture2D schat;
         private List<Treasure> treasure;
+        private List<Treasure> treasure2;
 
         private Texture2D levens;
         private List<Lifes> lifes;
@@ -231,9 +232,15 @@ namespace Project1
             anker = new Anker(ancher);
 
             treasure = new List<Treasure>();
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < 12; i++)
             {
                 treasure.Add(new Treasure(schat));             
+            }
+
+            treasure2 = new List<Treasure>();
+            for (int i = 0; i < 12; i++)
+            {
+                treasure2.Add(new Treasure(schat));
             }
 
             lifes = new List<Lifes>();
@@ -298,10 +305,10 @@ namespace Project1
                     foreach (var a in background)
                         a.Update(gameTime);
 
-                    for (int i = 0; i < 12; i++)
-                    {
-                        treasure[i].Update(gameTime);
-                    }
+                    foreach (var a in treasure)
+                        a.Update(gameTime);
+
+                    
 
                     foreach (var a in jellyfish)
                         a.Update(gameTime);
@@ -333,7 +340,6 @@ namespace Project1
                         if (treasure[i].remove)
                         {
                             treasure.RemoveAt(i);
-                            i--;
                         }
                     }
 
@@ -381,10 +387,8 @@ namespace Project1
                     foreach (var a in background)
                         a.Update(gameTime);
 
-                    for (int i = 12; i < 24; i++)
-                    {
-                        treasure[i].Update(gameTime);
-                    }
+                    foreach (var a in treasure2)
+                        a.Update(gameTime);
 
                     foreach (var a in jellyfish)
                         a.Update(gameTime);
@@ -410,13 +414,12 @@ namespace Project1
 
                     _camera.Volgen(fish);
 
-                    SCollision.Collision(treasure, fish);
-                    for (int i = 0; i < treasure.Count; i++)
+                    SCollision.Collision(treasure2, fish);
+                    for (int i = 0; i < treasure2.Count; i++)
                     {
-                        if (treasure[i].remove)
+                        if (treasure2[i].remove)
                         {
-                            treasure.RemoveAt(i);
-                            i--;
+                            treasure2.RemoveAt(i);
                         }
                     }
 
@@ -509,10 +512,8 @@ namespace Project1
                     foreach (var a in background)
                     a.Draw(_spriteBatch);
 
-                    for (int i = 0; i < 12; i++)
-                    {
-                        treasure[i].Draw(_spriteBatch);
-                    }
+                    foreach (var a in treasure)
+                        a.Draw(_spriteBatch);
 
                     foreach (var a in jellyfish)
                         a.Draw(_spriteBatch);
@@ -542,10 +543,8 @@ namespace Project1
                     foreach (var a in background)
                         a.Draw(_spriteBatch);
 
-                    for (int i = 12; i < 24; i++)
-                    {
-                        treasure[i].Draw(_spriteBatch);
-                    }
+                    foreach (var a in treasure2)
+                        a.Draw(_spriteBatch);
 
                     foreach (var a in jellyfish)
                         a.Draw(_spriteBatch);
