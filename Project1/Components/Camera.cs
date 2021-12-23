@@ -16,7 +16,7 @@ namespace Project1.Components
 
         public void Volgen(Fish vis)
         {
-            var positie = Matrix.CreateTranslation(-vis.positie.X - (vis.Rectangle.Width * 3.1f), -400, 0);
+            var positie = Matrix.CreateTranslation(-vis.positie.X - (vis.Rectangle.Width * 3.1f)+50, -350, 0);
 
             var verandering = Matrix.CreateTranslation(/*Game.Hoogte*/ Game.screenHeight/ 2,/*Game.Breedte */ Game.screenWidth/ 2, 0);
 

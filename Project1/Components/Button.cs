@@ -24,7 +24,7 @@ namespace Project1.Components
         {
             texture = newTexture;
 
-            size = new Vector2(300, 300);
+            size = new Vector2(100, 100);
         }
 
         public bool isClicked;

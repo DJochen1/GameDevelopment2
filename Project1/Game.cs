@@ -18,7 +18,7 @@ namespace Project1
     enum GameState
     {
         MainMenu,
-        Play,
+        Level1,
         HighScore,
         PauseMenu,
         Loser,
@@ -72,8 +72,14 @@ namespace Project1
         //public static int Hoogte;
         //public static int Breedte;
 
-        public static int screenWidth = SystemInformation.VirtualScreen.Width;
-        public static int screenHeight = SystemInformation.VirtualScreen.Height;
+        //public static int screenWidth = SystemInformation.VirtualScreen.Width;
+        //public static int screenHeight = SystemInformation.VirtualScreen.Height;
+
+        //public static int screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+        //public static int screenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+        public static int screenWidth = 670;
+        public static int screenHeight = 507;
 
         GameState currentGameState = GameState.MainMenu;
         //zodat we beginnen in main menu
@@ -87,7 +93,10 @@ namespace Project1
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            _graphics.IsFullScreen = false;
+            _graphics.IsFullScreen = true;
+
+            _graphics.PreferredBackBufferWidth = screenWidth;
+            _graphics.PreferredBackBufferHeight = screenHeight;
         }
 
         protected override void Initialize()
@@ -96,8 +105,6 @@ namespace Project1
 
             //Hoogte = _graphics.PreferredBackBufferWidth;
             //Breedte = _graphics.PreferredBackBufferWidth;
-            _graphics.PreferredBackBufferWidth = screenWidth;
-            _graphics.PreferredBackBufferHeight = screenHeight;
 
             _graphics.ApplyChanges();
 
@@ -112,10 +119,10 @@ namespace Project1
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             buttonPlay = new Button(Content.Load<Texture2D>("button"), _graphics.GraphicsDevice);
-            buttonPlay.SetPosition(new Vector2(screenWidth/2-150, screenHeight/2-300));
+            buttonPlay.SetPosition(new Vector2(screenWidth/2-50, screenHeight/2-100));
 
             buttonQuit = new Button(Content.Load<Texture2D>("Quit"), _graphics.GraphicsDevice);
-            buttonQuit.SetPosition(new Vector2(screenWidth / 2-150, screenHeight / 2 + 200));
+            buttonQuit.SetPosition(new Vector2(screenWidth / 2-50, screenHeight / 2 + 66));
             // -150 omdat ik de button op  300x300 heb gezet en om die in het midden te krijgen moet je daar de helft van af nemen
             //om een of andere reden als je (bij height) +200 doet gaat ie naar beneden, maar als je -200 doet gaat ie naar boven
             // bij width werkt + en - wel zoals je zou verwachten
@@ -219,7 +226,7 @@ namespace Project1
             {
                 background.Add(new Background(achtergrond)
                 {
-                    BackgroundPositie = new Vector2(i * achtergrond.Width - Math.Min(i, i + 1), 0),
+                    BackgroundPositie = new Vector2(i * achtergrond.Width, 0),
                 });
             }
         }
@@ -237,19 +244,19 @@ namespace Project1
                     IsMouseVisible = true;
                     if (buttonPlay.isClicked)
                     {
-                        currentGameState = GameState.Play;
+                        currentGameState = GameState.Level1;
                     }
                     buttonPlay.Update(mouse);
 
                     if (buttonQuit.isClicked)
                     {
-                        //currentGameState = GameState.End;
-                        currentGameState = GameState.Victory; //For testing purposes
+                        Exit();
                     }
                     buttonQuit.Update(mouse);
                     
                     break;
-                case GameState.Play:
+                case GameState.Level1:
+
                     //TODO ACTUALLY PAUSE THE GAME
                     //dus je moet shift in blijven houden ook om in het pauze menu te komen
                     if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift))
@@ -340,7 +347,6 @@ namespace Project1
             base.Update(gameTime);
         }
         
-
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Blue);
@@ -352,9 +358,9 @@ namespace Project1
                     buttonPlay.Draw(_spriteBatch);                    
                     buttonQuit.Draw(_spriteBatch);                    
                     break;
-                case GameState.Play:
+                case GameState.Level1:
                     _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Volg);
-                    
+
                     foreach (var a in background)
                     a.Draw(_spriteBatch);
 
