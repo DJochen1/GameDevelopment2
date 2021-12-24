@@ -234,13 +234,13 @@ namespace Project1
             anker = new Anker(ancher);
 
             treasure = new List<Treasure>();
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 15; i++)
             {
                 treasure.Add(new Treasure(schat));             
             }
 
             treasure2 = new List<Treasure>();
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 15; i++)
             {
                 treasure2.Add(new Treasure(schat));
             }
@@ -363,7 +363,7 @@ namespace Project1
                     }
 
                     
-                    if (SCollision.punten == 12 && fish.positie.X > 6050)
+                    if (SCollision.punten == 15 && fish.positie.X > 6050)
                     {
                         currentGameState = GameState.VictoryLevel1;
                     }
@@ -454,7 +454,7 @@ namespace Project1
                     }
 
 
-                    if (SCollision.punten == 24 && fish.positie.X > 6049)
+                    if (SCollision.punten == 30 && fish.positie.X > 6049)
                     {
                         currentGameState = GameState.Victory;
                     }
