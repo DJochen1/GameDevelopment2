@@ -40,6 +40,7 @@ namespace Project1
 
         private Texture2D krab;
         crab Crab;
+        crab Crab2;
 
         private Texture2D duiker;
         Diver diver;
@@ -201,6 +202,12 @@ namespace Project1
             fish = new Fish(vis, new KeyBoardReader());
 
             Crab = new crab(krab);
+            Crab2 = new crab(krab)
+            {
+                crabPositie = new Vector2(2899, 350),
+                MaxPositieLinks = 2900,
+                MaxPositieRechts = 3300 
+            };
 
             diver = new Diver(duiker);
             diver2 = new Diver(duiker);
@@ -417,6 +424,7 @@ namespace Project1
                     fish.Update(gameTime);
 
                     Crab.Update(gameTime);
+                    Crab2.Update(gameTime);
 
                     diver.GetFishPositie(fish.positie);
 
@@ -443,6 +451,7 @@ namespace Project1
 
                     ECollision.TouchAnkerCheck(anker, fish);
                     ECollision.TouchCrabCheck(Crab, fish);
+                    ECollision.TouchCrabCheck(Crab2, fish);
                     ECollision.TouchDiverCheck(diver, fish);
                     ECollision.TouchDiverCheck(diver2, fish);
                     ECollision.TouchJellyFishCheck(jellyfish, fish);
@@ -582,6 +591,7 @@ namespace Project1
                     fish.Draw(_spriteBatch);
 
                     Crab.Draw(_spriteBatch);
+                    Crab2.Draw(_spriteBatch);
 
                     diver.Draw(_spriteBatch);
                     diver2.Draw(_spriteBatch);

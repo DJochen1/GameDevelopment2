@@ -17,6 +17,9 @@ namespace Project1.Components.Enemys
         private Animatie crabAnimatie;
         public Vector2 crabPositie;
         private Vector2 crabSnelheid;
+        public int MaxPositieLinks = 700;
+        public int MaxPositieRechts = 1100;
+
 
         public crab(Texture2D texture)
         {
@@ -49,9 +52,9 @@ namespace Project1.Components.Enemys
         private void Move()
         {
             crabSnelheid.Y = 0;
-            if (crabPositie.X < 700)
+            if (crabPositie.X < MaxPositieLinks)
                 crabSnelheid.X = 1;
-            if (crabPositie.X > 1100)
+            if (crabPositie.X > MaxPositieRechts)
                 crabSnelheid.X = -1;
             crabPositie += crabSnelheid;
         }
