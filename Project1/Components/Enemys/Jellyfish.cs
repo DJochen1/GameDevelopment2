@@ -16,6 +16,7 @@ namespace Project1.Components.Enemys
         private Animatie kwalAnimatie;
         public Vector2 kwalPositie { get; set; }
         private Vector2 crabSnelheid;
+        public Vector2 snelheid = new Vector2(0, 1.5f);
 
         public Jellyfish(Texture2D texture)
         {
@@ -50,9 +51,9 @@ namespace Project1.Components.Enemys
         {
             crabSnelheid.X = 0;
             if (kwalPositie.Y < 1)
-                crabSnelheid.Y = 1.5f;
+                crabSnelheid.Y = snelheid.Y;
             if (kwalPositie.Y > 300)
-                crabSnelheid.Y = -1.5f;
+                crabSnelheid.Y = -snelheid.Y;
             kwalPositie += crabSnelheid;
         }
 

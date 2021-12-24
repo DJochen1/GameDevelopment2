@@ -17,6 +17,8 @@ namespace Project1.Components.Enemys
         public Vector2 diverPositie;
         private Vector2 diverSnelheid;
         private Vector2 fishPositie;
+        public float limit = 2;
+        public float snelheid = 0.1f;
 
         public Diver(Texture2D texture)
         {
@@ -47,10 +49,10 @@ namespace Project1.Components.Enemys
         private void Move(Vector2 richting)
         {
             var direction = Vector2.Add(richting, -diverPositie);
-            direction = Vector2.Multiply(direction, 0.1f);
+            direction = Vector2.Multiply(direction, snelheid);
 
             diverSnelheid += direction;
-            diverSnelheid = LimitSnelheid(diverSnelheid, 2);
+            diverSnelheid = LimitSnelheid(diverSnelheid, limit);
             diverSnelheid = LimitPositie(diverSnelheid, diverPositie, fishPositie, new Vector2 (1000,0));
             diverPositie += diverSnelheid;
         }

@@ -43,6 +43,7 @@ namespace Project1
 
         private Texture2D duiker;
         Diver diver;
+        Diver diver2;
 
         private Texture2D kwal;
         private List<Jellyfish> jellyfish;
@@ -202,6 +203,7 @@ namespace Project1
             Crab = new crab(krab);
 
             diver = new Diver(duiker);
+            diver2 = new Diver(duiker);
 
             jellyfish = new List<Jellyfish>()
             {
@@ -351,6 +353,7 @@ namespace Project1
                     {
                         fish.positie = new Vector2(151, 50);
                         fish.levens += -1;
+                        diver.diverPositie = new Vector2(5000, 200);
                         lifes.RemoveAt(fish.levens);
                         if (fish.levens == 0)
                         {
@@ -382,8 +385,12 @@ namespace Project1
                         pauseButton.Update(mouse);
                     }
                     else IsMouseVisible = false;
-                    if (fish.positie.X > 6049)
+                    if (fish.positie.X > 6049) //dit zorgt ervoor dat in het begin van level 2 de vis terug op de juiste positie wordt gezet. Andere zaken die moeten veranderen kunnen hier ook in geplaatst worden
+                    {
                         fish.positie = new Vector2(151, 50);
+                        diver.diverPositie = new Vector2(3000, 200);
+                    }
+
                     foreach (var a in background)
                         a.Update(gameTime);
 
@@ -408,6 +415,10 @@ namespace Project1
 
                     diver.Update(gameTime);
 
+                    diver2.GetFishPositie(fish.positie);
+
+                    diver2.Update(gameTime);
+
                     Finish.Update(gameTime);
 
                     anker.Update(gameTime);
@@ -426,11 +437,14 @@ namespace Project1
                     ECollision.TouchAnkerCheck(anker, fish);
                     ECollision.TouchCrabCheck(Crab, fish);
                     ECollision.TouchDiverCheck(diver, fish);
+                    ECollision.TouchDiverCheck(diver2, fish);
                     ECollision.TouchJellyFishCheck(jellyfish, fish);
                     if (fish.death)
                     {
                         fish.positie = new Vector2(151, 50);
                         fish.levens += -1;
+                        diver.diverPositie = new Vector2(3000, 200);
+                        diver2.diverPositie = new Vector2(5000, 200);
                         lifes.RemoveAt(fish.levens);
                         if (fish.levens == 0)
                         {
@@ -546,8 +560,12 @@ namespace Project1
                     foreach (var a in treasure2)
                         a.Draw(_spriteBatch);
 
+
                     foreach (var a in jellyfish)
+                    {
                         a.Draw(_spriteBatch);
+                        a.snelheid = new Vector2(0, 2.3f);
+                    }
 
                     foreach (var a in lifes)
                         a.Draw(_spriteBatch);
@@ -555,11 +573,13 @@ namespace Project1
                     Finish.Draw(_spriteBatch);
 
                     fish.Draw(_spriteBatch);
-                    //fish.positie = new Vector2 (151,50);
 
                     Crab.Draw(_spriteBatch);
 
                     diver.Draw(_spriteBatch);
+                    diver2.Draw(_spriteBatch);
+                    diver2.limit = 2.5f;
+                    diver2.snelheid = 0.12f;
 
                     anker.Draw(_spriteBatch);
 
