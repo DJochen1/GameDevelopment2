@@ -302,8 +302,14 @@ namespace Project1
                         }
                         pauseButton.Update(mouse);
                     }
-                    else IsMouseVisible = false;   
-                    
+                    else IsMouseVisible = false;
+
+                    if (fish.positie.X > 6051)
+                    {
+                        fish.positie = new Vector2(151, 50);
+                        diver.diverPositie = new Vector2(5000, 200);
+                    }
+
                     foreach (var a in background)
                         a.Update(gameTime);
 
@@ -385,10 +391,11 @@ namespace Project1
                         pauseButton.Update(mouse);
                     }
                     else IsMouseVisible = false;
-                    if (fish.positie.X > 6049) //dit zorgt ervoor dat in het begin van level 2 de vis terug op de juiste positie wordt gezet. Andere zaken die moeten veranderen kunnen hier ook in geplaatst worden
+                    if (fish.positie.X > 6049) 
                     {
                         fish.positie = new Vector2(151, 50);
                         diver.diverPositie = new Vector2(3000, 200);
+                        diver2.diverPositie = new Vector2(5000, 200);
                     }
 
                     foreach (var a in background)
