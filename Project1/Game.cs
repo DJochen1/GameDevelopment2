@@ -24,7 +24,7 @@ namespace Project1
         PauseMenu,
         Loser,
         VictoryLevel1,
-        Victory,
+        VictoryLevel2,
         End,
     }  
 
@@ -80,14 +80,6 @@ namespace Project1
         private SchatkistCollision SCollision;
         private EnemyCollision ECollision;
 
-        //public static int Hoogte;
-        //public static int Breedte;
-
-        //public static int screenWidth = SystemInformation.VirtualScreen.Width;
-        //public static int screenHeight = SystemInformation.VirtualScreen.Height;
-
-        //public static int screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-        //public static int screenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
 
         public static int screenWidth = 670;
         public static int screenHeight = 507;
@@ -113,10 +105,6 @@ namespace Project1
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
-            //Hoogte = _graphics.PreferredBackBufferWidth;
-            //Breedte = _graphics.PreferredBackBufferWidth;
 
             _graphics.ApplyChanges();
 
@@ -131,13 +119,13 @@ namespace Project1
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             buttonPlay = new Button(Content.Load<Texture2D>("button"), _graphics.GraphicsDevice);
-            buttonPlay.SetPosition(new Vector2(screenWidth/2-50, screenHeight/2-100));
+            buttonPlay.SetPosition(new Vector2(screenWidth/2-60, screenHeight/2-100));
 
             buttonNext = new Button(Content.Load<Texture2D>("NextLevel"), _graphics.GraphicsDevice);
             buttonNext.SetPosition(new Vector2(150, 200));
 
             buttonQuit = new Button(Content.Load<Texture2D>("Quit"), _graphics.GraphicsDevice);
-            buttonQuit.SetPosition(new Vector2(screenWidth / 2-50, screenHeight / 2 + 66));
+            buttonQuit.SetPosition(new Vector2(screenWidth / 2-60, screenHeight / 2 + 66));
 
             pauseButton = new Button(Content.Load<Texture2D>("Pause"), _graphics.GraphicsDevice);
             pauseButton.SetPosition(new Vector2(screenWidth-300 , screenHeight/2 -500));
@@ -186,7 +174,6 @@ namespace Project1
             InitializeGameObjects();
         }
 
-        //moet deze niet protected zijn zoals de rest?
         private void InitializeGameObjects()
         {
             menuBackground = new MenuBackground(menuAchtergrond);
@@ -388,8 +375,6 @@ namespace Project1
                     if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift))
                     {
                         IsMouseVisible = true;
-                        //Zodat de muis niet visible is tijdens het spelen, alleen wanneer de shift key wordt ingedrukt
-
                         if (pauseButton.isClicked && (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift)
                             || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift)))
                         {
@@ -472,7 +457,7 @@ namespace Project1
 
                     if (SCollision.punten == 30 && fish.positie.X > 6049)
                     {
-                        currentGameState = GameState.Victory;
+                        currentGameState = GameState.VictoryLevel2;
                     }
 
 
@@ -500,14 +485,13 @@ namespace Project1
                     buttonQuit.Update(mouse);
 
                     break;
-                case GameState.Victory:
+                case GameState.VictoryLevel2:
                     if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter))
                     {
                         currentGameState = GameState.End;
                     }
                     break;
                 case GameState.Loser:
-                    //again, for testing purposes, maar om eruit te komen moet je op enter drukken (of esc)
                     if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter))
                     {
                         currentGameState = GameState.End;
@@ -615,7 +599,7 @@ namespace Project1
                     buttonQuit.Draw(_spriteBatch);
                     buttonQuit.SetPosition(new Vector2(400, 200));
                     break;
-                case GameState.Victory:
+                case GameState.VictoryLevel2:
                     winnerBackground.Draw(_spriteBatch);
                     break;
                 case GameState.Loser:
