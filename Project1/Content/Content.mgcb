@@ -37,18 +37,6 @@
 /processorParam:TextureFormat=Color
 /build:button.png
 
-#begin button.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:button.png
-
 #begin diver3.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -121,7 +109,7 @@
 /processorParam:TextureFormat=Color
 /build:Level1Cleared.png
 
-#begin LevelCleared.png
+#begin Level2Cleared.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -131,7 +119,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:LevelCleared.png
+/build:Level2Cleared.png
 
 #begin loser.png
 /importer:TextureImporter

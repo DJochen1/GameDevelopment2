@@ -177,7 +177,7 @@ namespace Project1
             Texture2D _winnaarlevel1 = Content.Load<Texture2D>("Level1Cleared");
             winnaarLevel1 = _winnaarlevel1;
 
-            Texture2D _winnerAchtergrond = Content.Load<Texture2D>("LevelCleared");
+            Texture2D _winnerAchtergrond = Content.Load<Texture2D>("Level2Cleared");
             winnerAchtergrond = _winnerAchtergrond;
 
             Texture2D _loserAchtergrond = Content.Load<Texture2D>("loser");
