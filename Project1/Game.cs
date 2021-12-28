@@ -240,7 +240,7 @@ namespace Project1
             }
 
             lifes = new List<Lifes>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < fish.levens; i++)
             {
                 lifes.Add(new Lifes(levens, new Vector2 (80, (i * 50)+50)));
             }

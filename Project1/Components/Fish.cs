@@ -16,7 +16,7 @@ namespace Project1.Components
         private Animatie animatie;
         public Vector2 positie;
         public bool death = false;
-        public int levens = 5;
+        public int levens = 3;
         //private Vector2 snelheid;
         //private Vector2 versnelling;
         //private Vector2 mouseVector;
