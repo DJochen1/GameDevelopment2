@@ -15,7 +15,7 @@ namespace Project1.Collision
     public class EnemyCollision : CollisionManager
     {
 
-        public void TouchCrabCheck(crab krab, Fish fish)
+        public void TouchCrabCheck(Crab krab, Fish fish)
         {
             if (CheckCollision(krab.Rectangle, fish.Rectangle))
             {

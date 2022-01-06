@@ -10,6 +10,7 @@ using Project1.Interface;
 using System.Diagnostics;
 using Project1.Collision;
 using Project1.Components.Enemys;
+using Project1.Levels;
 using System.Windows.Forms;
 using Button = Project1.Components.Button;
 
@@ -21,7 +22,6 @@ namespace Project1
         Level1,
         Level2,
         HighScore,
-        PauseMenu,
         Loser,
         VictoryLevel1,
         VictoryLevel2,
@@ -33,37 +33,29 @@ namespace Project1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        Level1 level1;
+
+        Level2 level2;
+
         private Camera _camera;
 
         private Texture2D vis;
-        private Fish fish;
 
         private Texture2D krab;
-        crab Crab;
-        crab Crab2;
 
         private Texture2D duiker;
-        Diver diver;
-        Diver diver2;
 
         private Texture2D kwal;
-        private List<Jellyfish> jellyfish;
 
         private Texture2D ancher;
-        Anker anker;
 
         private Texture2D schat;
-        private List<Treasure> treasure;
-        private List<Treasure> treasure2;
 
         private Texture2D levens;
-        private List<Lifes> lifes;
 
         private Texture2D lijn;
-        FinishLine Finish;
 
         private Texture2D achtergrond;
-        private List<Background> background;
 
         private Texture2D menuAchtergrond;
         public MenuBackground menuBackground;
@@ -184,76 +176,9 @@ namespace Project1
 
             loserBackground = new MenuBackground(loserAchtergrond);
 
-            Finish = new FinishLine(lijn);
+            level1 = new Level1(_camera, vis, krab, duiker, kwal, ancher, schat, levens, lijn, achtergrond, SCollision, ECollision);
+            level2 = new Level2(_camera, vis, krab, duiker, kwal, ancher, schat, levens, lijn, achtergrond, SCollision, ECollision);
 
-            fish = new Fish(vis, new KeyBoardReader());
-
-            Crab = new crab(krab);
-            Crab2 = new crab(krab)
-            {
-                crabPositie = new Vector2(2899, 350),
-                MaxPositieLinks = 2900,
-                MaxPositieRechts = 3300 
-            };
-
-            diver = new Diver(duiker);
-            diver2 = new Diver(duiker);
-
-            jellyfish = new List<Jellyfish>()
-            {
-                new Jellyfish(kwal)
-                {
-                    kwalPositie = new Vector2 (2750, 0)
-                },
-                new Jellyfish(kwal)
-                {
-                    kwalPositie = new Vector2 (3500, 0)
-                },
-                new Jellyfish(kwal)
-                {
-                    kwalPositie = new Vector2 (4250, 0)
-                },
-                new Jellyfish(kwal)
-                {
-                    kwalPositie = new Vector2 (5000, 0)
-                },
-                new Jellyfish(kwal)
-                {
-                    kwalPositie = new Vector2 (5750, 0)
-                }
-
-            };
-
-
-            anker = new Anker(ancher);
-
-            treasure = new List<Treasure>();
-            for (int i = 0; i < 15; i++)
-            {
-                treasure.Add(new Treasure(schat));             
-            }
-
-            treasure2 = new List<Treasure>();
-            for (int i = 0; i < 15; i++)
-            {
-                treasure2.Add(new Treasure(schat));
-            }
-
-            lifes = new List<Lifes>();
-            for (int i = 0; i < fish.levens; i++)
-            {
-                lifes.Add(new Lifes(levens, new Vector2 (80, (i * 50)+50)));
-            }
-
-            background = new List<Background>();
-
-            for (int i = 0; i < 10; i++)
-            {
-                background.Add(new Background(achtergrond)
-                {
-                    BackgroundPositie = new Vector2(i * achtergrond.Width, 0),
-                });
-            }
         }
 
         protected override void Update(GameTime gameTime)
@@ -282,193 +207,28 @@ namespace Project1
                     break;
                 case GameState.Level1:
 
-                    //TODO ACTUALLY PAUSE THE GAME
-                    //dus je moet shift in blijven houden ook om in het pauze menu te komen
-                    if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift))
-                    {
-                        IsMouseVisible = true;
-                        //Zodat de muis niet visible is tijdens het spelen, alleen wanneer de shift key wordt ingedrukt
+                    IsMouseVisible = false;
+                    level1.Update(gameTime);
 
-                        if (pauseButton.isClicked && (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) 
-                            || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift)))
-                        {
-                            currentGameState = GameState.PauseMenu;
-                        }
-                        pauseButton.Update(mouse);
-                    }
-                    else IsMouseVisible = false;
+                    if (level1.Loser == true)
+                        currentGameState = GameState.Loser;
 
-                    if (fish.positie.X > 6051)
-                    {
-                        fish.positie = new Vector2(151, 50);
-                        diver.diverPositie = new Vector2(5000, 200);
-                    }
-
-                    foreach (var a in background)
-                        a.Update(gameTime);
-
-                    foreach (var a in treasure)
-                        a.Update(gameTime);
-
-                    
-
-                    foreach (var a in jellyfish)
-                        a.Update(gameTime);
-
-                    foreach (var a in lifes)
-                    {
-                        a.Update(gameTime);
-                        a.hartPositie.X = fish.positie.X - 71;
-                    }
-
-                    
-                    fish.Update(gameTime);
-
-                    Crab.Update(gameTime);
-
-                    diver.GetFishPositie(fish.positie);
-
-                    diver.Update(gameTime);
-
-                    Finish.Update(gameTime);
-
-                    anker.Update(gameTime);
-
-                    _camera.Volgen(fish);
-
-                    SCollision.Collision(treasure, fish);
-                    for (int i = 0; i < treasure.Count; i++)
-                    {
-                        if (treasure[i].remove)
-                        {
-                            treasure.RemoveAt(i);
-                        }
-                    }
-
-                    ECollision.TouchAnkerCheck(anker, fish);
-                    ECollision.TouchCrabCheck(Crab, fish);
-                    ECollision.TouchDiverCheck(diver, fish);
-                    ECollision.TouchJellyFishCheck(jellyfish, fish);
-                    if (fish.death)
-                    {
-                        fish.positie = new Vector2(151, 50);
-                        fish.levens += -1;
-                        diver.diverPositie = new Vector2(5000, 200);
-                        lifes.RemoveAt(fish.levens);
-                        if (fish.levens == 0)
-                        {
-                            currentGameState = GameState.Loser;
-                        }
-                        fish.death = false;
-                    }
-
-                    
-                    if (SCollision.punten == 15 && fish.positie.X > 6050)
-                    {
+                    if (level1.LevelEnd == true)
                         currentGameState = GameState.VictoryLevel1;
-                    }
-                    
-   
 
                     break;
                 case GameState.Level2:
-                    if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift) || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift))
-                    {
-                        IsMouseVisible = true;
-                        if (pauseButton.isClicked && (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.LeftShift)
-                            || Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.RightShift)))
-                        {
-                            currentGameState = GameState.PauseMenu;
-                        }
-                        pauseButton.Update(mouse);
-                    }
-                    else IsMouseVisible = false;
-                    if (fish.positie.X > 6049) 
-                    {
-                        fish.positie = new Vector2(151, 50);
-                        diver.diverPositie = new Vector2(3000, 200);
-                        diver2.diverPositie = new Vector2(5000, 200);
-                    }
 
-                    foreach (var a in background)
-                        a.Update(gameTime);
+                    IsMouseVisible = false;
+                    level2.Update(gameTime);
 
-                    foreach (var a in treasure2)
-                        a.Update(gameTime);
+                    if (level2.Loser == true)
+                        currentGameState = GameState.Loser;
 
-                    foreach (var a in jellyfish)
-                        a.Update(gameTime);
-
-                    foreach (var a in lifes)
-                    {
-                        a.Update(gameTime);
-                        a.hartPositie.X = fish.positie.X - 71;
-                    }
-
-
-                    fish.Update(gameTime);
-
-                    Crab.Update(gameTime);
-                    Crab2.Update(gameTime);
-
-                    diver.GetFishPositie(fish.positie);
-
-                    diver.Update(gameTime);
-
-                    diver2.GetFishPositie(fish.positie);
-
-                    diver2.Update(gameTime);
-
-                    Finish.Update(gameTime);
-
-                    anker.Update(gameTime);
-
-                    _camera.Volgen(fish);
-
-                    SCollision.Collision(treasure2, fish);
-                    for (int i = 0; i < treasure2.Count; i++)
-                    {
-                        if (treasure2[i].remove)
-                        {
-                            treasure2.RemoveAt(i);
-                        }
-                    }
-
-                    ECollision.TouchAnkerCheck(anker, fish);
-                    ECollision.TouchCrabCheck(Crab, fish);
-                    ECollision.TouchCrabCheck(Crab2, fish);
-                    ECollision.TouchDiverCheck(diver, fish);
-                    ECollision.TouchDiverCheck(diver2, fish);
-                    ECollision.TouchJellyFishCheck(jellyfish, fish);
-                    if (fish.death)
-                    {
-                        fish.positie = new Vector2(151, 50);
-                        fish.levens += -1;
-                        diver.diverPositie = new Vector2(3000, 200);
-                        diver2.diverPositie = new Vector2(5000, 200);
-                        lifes.RemoveAt(fish.levens);
-                        if (fish.levens == 0)
-                        {
-                            currentGameState = GameState.Loser;
-                        }
-                        fish.death = false;
-                    }
-
-
-                    if (SCollision.punten == 30 && fish.positie.X > 6049)
-                    {
+                    if (level2.LevelEnd == true)
                         currentGameState = GameState.VictoryLevel2;
-                    }
 
 
-
-                    break;
-                case GameState.PauseMenu:
-                    if (buttonQuit.isClicked)
-                    {
-                        Exit();
-                    }
-                    buttonQuit.Update(mouse);
                     break;
                 case GameState.VictoryLevel1:
                     IsMouseVisible = true;
@@ -523,75 +283,17 @@ namespace Project1
                 case GameState.Level1:
                     _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Volg);
 
-                    foreach (var a in background)
-                    a.Draw(_spriteBatch);
-
-                    foreach (var a in treasure)
-                        a.Draw(_spriteBatch);
-
-                    foreach (var a in jellyfish)
-                        a.Draw(_spriteBatch);
-
-                    foreach (var a in lifes)
-                        a.Draw(_spriteBatch);
-
-                    Finish.Draw(_spriteBatch);
-
-                    fish.Draw(_spriteBatch);
-
-                    Crab.Draw(_spriteBatch);
-
-                    diver.Draw(_spriteBatch);
-
-                    anker.Draw(_spriteBatch);
-
-                    Finish.Draw(_spriteBatch);
+                    level1.Draw(_spriteBatch);
 
                     _spriteBatch.End();      
-                    
-                    pauseButton.Draw(_spriteBatch);
+
                     break;
                 case GameState.Level2:
                     _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Volg);
 
-                    foreach (var a in background)
-                        a.Draw(_spriteBatch);
-
-                    foreach (var a in treasure2)
-                        a.Draw(_spriteBatch);
-
-
-                    foreach (var a in jellyfish)
-                    {
-                        a.Draw(_spriteBatch);
-                        a.snelheid = new Vector2(0, 2.3f);
-                    }
-
-                    foreach (var a in lifes)
-                        a.Draw(_spriteBatch);
-
-                    Finish.Draw(_spriteBatch);
-
-                    fish.Draw(_spriteBatch);
-
-                    Crab.Draw(_spriteBatch);
-                    Crab2.Draw(_spriteBatch);
-
-                    diver.Draw(_spriteBatch);
-                    diver2.Draw(_spriteBatch);
-                    diver2.limit = 2.5f;
-                    diver2.snelheid = 0.12f;
-
-                    anker.Draw(_spriteBatch);
-
-                    Finish.Draw(_spriteBatch);
+                    level2.Draw(_spriteBatch);
 
                     _spriteBatch.End();
-                    break;
-                case GameState.PauseMenu:
-                    menuBackground.Draw(_spriteBatch);
-                    buttonQuit.SetPosition(new Vector2(screenWidth / 2 -150, screenHeight / 2-150 ));
-                    buttonQuit.Draw(_spriteBatch);
                     break;
                 case GameState.VictoryLevel1:
                     winnerLevel1.Draw(_spriteBatch);

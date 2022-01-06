@@ -11,7 +11,7 @@ using Project1.Input;
 
 namespace Project1.Components.Enemys
 {
-    public class crab : IGameObject
+    public class Crab : IGameObject
     {
         private Texture2D crabTexture;
         private Animatie crabAnimatie;
@@ -21,7 +21,7 @@ namespace Project1.Components.Enemys
         public int MaxPositieRechts = 1100;
 
 
-        public crab(Texture2D texture)
+        public Crab(Texture2D texture)
         {
             crabTexture = texture;
 
