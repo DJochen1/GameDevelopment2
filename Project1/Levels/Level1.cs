@@ -196,8 +196,8 @@ namespace Project1.Levels
                 fish.death = false;
             }
 
-
-            if (SCollision.punten == 15 && fish.positie.X > 6050)
+            //De || is voor testing purposes, later terug vervangen door &&
+            if (SCollision.punten == 15 || fish.positie.X > 6050)
             {
                 LevelEnd = true;
             }

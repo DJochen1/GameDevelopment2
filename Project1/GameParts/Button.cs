@@ -6,11 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Project1.Components
+namespace Project1.GameParts
 {
     public class Button
     {
-
         Texture2D texture;
         Vector2 position;
         Rectangle rectangle;
@@ -38,15 +37,10 @@ namespace Project1.Components
 
             if (mouseRectangle.Intersects(rectangle))
             {
-                //laat de button pulseren
-                /*if (colour.A == 255) down = false;
-                if (colour.A == 0) down = true;
-                if (down) colour.A += 2; else colour.A -= 2;*/
                 if (mouse.LeftButton == ButtonState.Pressed) isClicked = true;
             }
-            else //if (colour.A <255)
+            else 
             {
-                //colour.A +=2;
                 isClicked = false;
             }
         }

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Project1.Interface;
 
-namespace Project1.Components
+namespace Project1.GameParts
 {
     public class MenuBackground : IGameObject
     {
