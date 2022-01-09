@@ -224,7 +224,7 @@ namespace Project1.Levels
             }
 
 
-            if (SCollision.punten == 10 && fish.positie.X > 6049)
+            if (SCollision.punten >= 10 && fish.positie.X > 6049)
             {
                 LevelEnd = true;
             }
