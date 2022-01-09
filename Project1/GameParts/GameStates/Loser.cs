@@ -11,23 +11,23 @@ namespace Project1.GameParts.GameStates
     public class Loser : GameState
     {        
         MenuBackground loserBackground;
-        Button buttonPlay;
         Button buttonQuit;
+        Button buttonMenu;
 
         public Loser(ContentManager _content, GraphicsDevice _graphics, Game _game) : base(_content, _graphics, _game)
         {
-            Texture2D texturePlay = content.Load<Texture2D>("button");
-            Texture2D textureQuit = content.Load<Texture2D>("Quit");
-
             Texture2D textureLoser = content.Load<Texture2D>("loser");
 
-            buttonPlay = new Button(texturePlay, graphics);
-            buttonPlay.SetPosition(new Vector2(Game.screenWidth / 2 - 60, Game.screenHeight / 2 - 100));
-
-            buttonQuit = new Button(textureQuit, graphics);
-            buttonQuit.SetPosition(new Vector2(Game.screenWidth / 2 - 60, Game.screenHeight / 2 + 66));
+            Texture2D textureQuit = content.Load<Texture2D>("Quit");
+            Texture2D textureMenu = content.Load<Texture2D>("buttonMenu");
 
             loserBackground = new MenuBackground(textureLoser);
+
+            buttonQuit = new Button(textureQuit, graphics);
+            buttonQuit.SetPosition(new Vector2(Game.screenWidth / 2 -160, Game.screenHeight / 2 + 66));
+
+            buttonMenu = new Button(textureMenu, graphics);
+            buttonMenu.SetPosition(new Vector2(Game.screenWidth / 2 , Game.screenHeight / 2 +66 ));
         }
 
         public override void Update(GameTime gameTime)
@@ -35,14 +35,11 @@ namespace Project1.GameParts.GameStates
             game.IsMouseVisible = true;
             MouseState mouse = Mouse.GetState();
 
-            // TODO 
-            // MAINMENU NOT LEVEL1!!!!!
-
-            if (buttonPlay.isClicked)
+            if (buttonMenu.isClicked)
             {
-                game.ChangeState(new Level1Game(content, graphics, game));
+                game.ChangeState(new MainMenu(content, graphics, game));
             }
-            buttonPlay.Update(mouse);
+            buttonMenu.Update(mouse);
 
             if (buttonQuit.isClicked)
             {
@@ -51,10 +48,10 @@ namespace Project1.GameParts.GameStates
             buttonQuit.Update(mouse);
         }
 
-        public override void Draw(SpriteBatch spriteBatch/*, GameTime gameTime*/)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             loserBackground.Draw(spriteBatch);
-            buttonPlay.Draw(spriteBatch);
+            buttonMenu.Draw(spriteBatch); 
             buttonQuit.Draw(spriteBatch);
         }
     }

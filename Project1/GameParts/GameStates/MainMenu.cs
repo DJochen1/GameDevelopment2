@@ -14,7 +14,7 @@ namespace Project1.GameParts.GameStates
     {
         Button buttonPlay;
         Button buttonQuit;
-        //Button buttonHow;
+        Button buttonHow;
         MenuBackground menuBackground;
 
         public MainMenu(ContentManager _content, GraphicsDevice _graphics, Game _game) : base(_content, _graphics, _game)
@@ -22,24 +22,22 @@ namespace Project1.GameParts.GameStates
             graphics = _graphics;
             game = _game;
 
-            Texture2D texturePlay = content.Load<Texture2D>("button");
-            Texture2D textureQuit = content.Load<Texture2D>("Quit");
-
-            //Texture2D textureHow = content.Load<Texture2D>("buttonHow");
-
             Texture2D textureMenu = content.Load<Texture2D>("MainMenu");
 
-
-            buttonPlay = new Button(texturePlay, graphics);
-            buttonPlay.SetPosition(new Vector2(Game.screenWidth / 2 - 60, Game.screenHeight / 2 - 100));
-
-            buttonQuit = new Button(textureQuit, graphics);
-            buttonQuit.SetPosition(new Vector2(Game.screenWidth / 2 - 60, Game.screenHeight / 2 + 66));
-
-            /*buttonHow = new Button(textureHow, graphics);
-            buttonHow.SetPosition(new Vector2(Game.screenWidth / 2 - 60, Game.screenHeight / 2 ));*/
+            Texture2D texturePlay = content.Load<Texture2D>("button");
+            Texture2D textureHow = content.Load<Texture2D>("buttonHow");
+            Texture2D textureQuit = content.Load<Texture2D>("Quit");
 
             menuBackground = new MenuBackground(textureMenu);
+
+            buttonPlay = new Button(texturePlay, graphics);
+            buttonPlay.SetPosition(new Vector2(Game.screenWidth / 2 - 90, Game.screenHeight /2- 90));
+
+            buttonHow = new Button(textureHow, graphics);
+            buttonHow.SetPosition(new Vector2(Game.screenWidth / 2 - 90, Game.screenHeight / 2));
+
+            buttonQuit = new Button(textureQuit, graphics);
+            buttonQuit.SetPosition(new Vector2(Game.screenWidth / 2 - 90, Game.screenHeight / 2 +90));
 
         }
                 
@@ -49,30 +47,30 @@ namespace Project1.GameParts.GameStates
             MouseState mouse = Mouse.GetState();
 
             if (buttonPlay.isClicked)
-            {
+            {                
                 game.ChangeState(new Level1Game(content, graphics, game));
             }
             buttonPlay.Update(mouse);
+
+            if (buttonHow.isClicked)
+            {
+                game.ChangeState(new HowToPlay(content, graphics, game));
+            }
+            buttonHow.Update(mouse);
 
             if (buttonQuit.isClicked)
             {
                 game.ChangeState(new End(content, graphics, game));
             }
-            buttonQuit.Update(mouse);
-
-           /* if (buttonHow.isClicked)
-            {
-                game.ChangeState(new HowToPlay(content, graphics, game));
-            }
-            buttonHow.Update(mouse);*/
+            buttonQuit.Update(mouse);            
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             menuBackground.Draw(spriteBatch);
             buttonPlay.Draw(spriteBatch);
+            buttonHow.Draw(spriteBatch);
             buttonQuit.Draw(spriteBatch);
-            //buttonHow.Draw(spriteBatch);
         }
 
     }

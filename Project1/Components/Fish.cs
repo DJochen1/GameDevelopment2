@@ -17,10 +17,13 @@ namespace Project1.Components
         public Vector2 positie;
         public bool death = false;
         public int levens = 3;
+
         //private Vector2 snelheid;
         //private Vector2 versnelling;
         //private Vector2 mouseVector;
+
         IInputReader inputReader;
+
         public Fish(Texture2D texture, IInputReader reader)
         {
             fishTexture = texture;
@@ -28,8 +31,7 @@ namespace Project1.Components
             animatie.AddFrame(new AnimationFrame(new Rectangle(0, 0, 125, 82)));
             animatie.AddFrame(new AnimationFrame(new Rectangle(125, 0, 125, 82)));
             animatie.AddFrame(new AnimationFrame(new Rectangle(249, 0, 125, 82)));
-            animatie.AddFrame(new AnimationFrame(new Rectangle(375, 0, 125, 82)));
-            
+            animatie.AddFrame(new AnimationFrame(new Rectangle(375, 0, 125, 82)));            
 
             positie = new Vector2(151, 50);
             //snelheid = new Vector2(1, 1);
@@ -37,8 +39,6 @@ namespace Project1.Components
             
             //input inlezen
             this.inputReader = reader;
-
-
         }
 
         public Rectangle Rectangle
@@ -58,10 +58,6 @@ namespace Project1.Components
             animatie.Update(gameTime);   
         }
 
-
-
-
-
         // onderstaande methode zorgt ervoor dat de vis niet verder gaat dan maximaal opgegeven
         // de vis kan wel nog naar de juiste richting bewegen
         // de vis moet in een virtuele box blijven
@@ -80,11 +76,9 @@ namespace Project1.Components
             return v + richting;
         }
 
-
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(fishTexture, positie, animatie.CurrentFrame.SourceRectangle, Color.White , 0, new Vector2(0, 0), 1f, SpriteEffects.None, 1f);
-            
         }
     }
 }

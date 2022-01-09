@@ -15,6 +15,7 @@ namespace Project1.Components
         private Texture2D BackgroundTexture;
         public Vector2 BackgroundPositie;
 
+
         public Rectangle Rectangle
         {
             get { return new Rectangle((int)BackgroundPositie.X, (int)BackgroundPositie.Y, BackgroundTexture.Width, BackgroundTexture.Height); }
@@ -27,12 +28,33 @@ namespace Project1.Components
         }
         public void Update(GameTime gameTime)
         {
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(BackgroundTexture, BackgroundPositie, null, Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0.2f);
         }
+
+        /*public Vector2 BackgroundPositie;
+
+        private Texture2D backgroundTexture;
+        Rectangle rectangle = new Rectangle(0, 0, Game.screenWidth, Game.screenHeight);
+        Color colour = new Color(255, 255, 255, 255);
+
+        public Background(Texture2D texture)
+        {
+            backgroundTexture = texture;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            //spriteBatch.Begin();
+            spriteBatch.Draw(backgroundTexture, rectangle, colour);
+            //spriteBatch.End();
+        }*/
     }
 }

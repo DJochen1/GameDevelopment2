@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Project1.Collision;
 using Project1.Components;
 using Project1.Levels;
@@ -37,6 +38,9 @@ namespace Project1.GameParts.GameStates
         private SchatkistCollision SCollision;
         private EnemyCollision ECollision;
 
+        private SpriteFont font;
+      
+
         public Level1Game(ContentManager _content, GraphicsDevice _graphics, Game _game) : base(_content, _graphics, _game)
         {
             graphics = _graphics;
@@ -44,37 +48,30 @@ namespace Project1.GameParts.GameStates
 
             _camera = new Camera();
 
-            Texture2D _vis = content.Load<Texture2D>("spritesheet_fish");
-            vis = _vis;
+            vis = content.Load<Texture2D>("spritesheet_fish");
 
-            Texture2D _krab = content.Load<Texture2D>("krab");
-            krab = _krab;
+            krab = content.Load<Texture2D>("krab");
 
-            Texture2D _duiker = content.Load<Texture2D>("diver3");
-            duiker = _duiker;
+            duiker = content.Load<Texture2D>("diver3");
 
-            Texture2D _kwal = content.Load<Texture2D>("kwal");
-            kwal = _kwal;
+            kwal = content.Load<Texture2D>("kwal");
 
-            Texture2D _schat = content.Load<Texture2D>("treasure2");
-            schat = _schat;
+            schat = content.Load<Texture2D>("treasure2");
 
-            Texture2D _levens = content.Load<Texture2D>("hart2");
-            levens = _levens;
+            levens = content.Load<Texture2D>("hart2");
 
-            Texture2D _ancher = content.Load<Texture2D>("anker");
-            ancher = _ancher;
+            ancher = content.Load<Texture2D>("anker");
 
-            Texture2D _lijn = content.Load<Texture2D>("finishline");
-            lijn = _lijn;
+            lijn = content.Load<Texture2D>("finishline");
 
-            Texture2D _achtergrond = content.Load<Texture2D>("oceaan");
-            achtergrond = _achtergrond;
+            achtergrond = content.Load<Texture2D>("oceaan");
 
             SCollision = new SchatkistCollision();
             ECollision = new EnemyCollision();
+
+            font = content.Load<SpriteFont>("Font");
             
-            InitializeGameObjects();
+            InitializeGameObjects();            
         }
 
         private void InitializeGameObjects()
@@ -84,21 +81,22 @@ namespace Project1.GameParts.GameStates
 
         public override void Update(GameTime gameTime)
         {
-            level1.Update(gameTime);
-            if (level1.Loser == true)
-                game.ChangeState(new Loser(content, graphics, game));
+                level1.Update(gameTime);
+                if (level1.Loser == true)
+                    game.ChangeState(new Loser(content, graphics, game));
 
-            if (level1.LevelEnd == true)
-                game.ChangeState(new VictoryLevel2(content, graphics, game));
+                if (level1.LevelEnd == true)
+                    game.ChangeState(new VictoryLevel1(content, graphics, game));
         }
 
         public override void Draw(SpriteBatch spriteBatch)
-        { 
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Volg);
+        {             
 
             level1.Draw(spriteBatch);
-
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, Convert.ToString(SCollision.punten), new Vector2(Game.screenWidth -100, Game.screenHeight / 2-210), Color.Black);
             spriteBatch.End();
+
         }
     }
 }

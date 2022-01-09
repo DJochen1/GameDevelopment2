@@ -14,7 +14,5 @@ namespace Project1.Animation
         {
             SourceRectangle = rectangle;
         }
-    }
-
-    
+    }    
 }

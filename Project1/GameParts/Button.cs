@@ -15,13 +15,12 @@ namespace Project1.GameParts
         Rectangle rectangle;
 
         Color colour = new Color(255, 255, 255, 255);
-        //heb deze nodig maar weet nog niet waarom (voor de Draw methode, maar opnieuw weet nog niet waarom)
 
         public Vector2 size;
 
-        public Button(Texture2D newTexture, GraphicsDevice graphics)
+        public Button(Texture2D _texture, GraphicsDevice graphics)
         {
-            texture = newTexture;
+            texture = _texture;
 
             size = new Vector2(120, 120);
         }

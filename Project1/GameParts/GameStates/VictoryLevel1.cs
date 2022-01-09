@@ -20,18 +20,18 @@ namespace Project1.GameParts.GameStates
             graphics = _graphics;
             game = _game;
 
+            Texture2D textureWinnerLevel1 = content.Load<Texture2D>("Level1Cleared");
+
             Texture2D textureNext = content.Load<Texture2D>("NextLevel");
             Texture2D textureQuit = content.Load<Texture2D>("Quit");
 
-            Texture2D textureWinnerLevel1 = content.Load<Texture2D>("Level1Cleared");
+            winnerLevel1 = new MenuBackground(textureWinnerLevel1);
 
             buttonNext = new Button(textureNext, graphics);
-            buttonNext.SetPosition(new Vector2(Game.screenWidth / 2 - 60, Game.screenHeight / 2 -100));
+            buttonNext.SetPosition(new Vector2(Game.screenWidth / 2 - 160, Game.screenHeight / 2-60));
 
             buttonQuit = new Button(textureQuit, graphics);
-            buttonQuit.SetPosition(new Vector2(Game.screenWidth / 2 - 60, Game.screenHeight / 2 + 66));
-
-            winnerLevel1 = new MenuBackground(textureWinnerLevel1);
+            buttonQuit.SetPosition(new Vector2(Game.screenWidth / 2 , Game.screenHeight / 2-60));
         }
 
         public override void Update(GameTime gameTime)

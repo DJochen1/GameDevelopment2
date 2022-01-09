@@ -13,7 +13,6 @@ namespace Project1.GameParts.GameStates
     {
         public End(ContentManager _content, GraphicsDevice _graphics, Game _game) : base(_content, _graphics, _game)
         {
-
         }        
 
         public override void Update(GameTime gameTime)

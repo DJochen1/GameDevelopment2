@@ -14,9 +14,11 @@ namespace Project1.Components.Enemys
     {
         private Texture2D diverTexture;
         private Animatie diverAnimatie;
+
         public Vector2 diverPositie;
         private Vector2 diverSnelheid;
         private Vector2 fishPositie;
+
         public float limit = 2;
         public float snelheid = 0.1f;
 
@@ -37,8 +39,6 @@ namespace Project1.Components.Enemys
             diverAnimatie.AddFrame(new AnimationFrame(new Rectangle(400, 200, 200, 100)));
 
             diverPositie = new Vector2(6000, 200);
-
-
         }
 
         public Rectangle Rectangle
@@ -90,7 +90,6 @@ namespace Project1.Components.Enemys
                 snelheid.Y = 0;
                 return snelheid;
             }
-
         }
 
         public void GetFishPositie(Vector2 positie)
@@ -98,10 +97,8 @@ namespace Project1.Components.Enemys
             fishPositie = positie;
         }
 
-
         public void Update(GameTime gameTime)
         {
-
             Move(fishPositie);
 
             diverAnimatie.Update(gameTime);

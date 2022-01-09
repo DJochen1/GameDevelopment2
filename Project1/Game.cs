@@ -13,7 +13,6 @@ namespace Project1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        //kijken of deze twee ook weg kunnen
         public static int screenWidth = 670;
         public static int screenHeight = 507;
 
@@ -33,6 +32,7 @@ namespace Project1
 
             _graphics.PreferredBackBufferWidth = screenWidth;
             _graphics.PreferredBackBufferHeight = screenHeight;
+            _graphics.ApplyChanges();
         }
 
         //Het kan zonder deze

@@ -37,6 +37,8 @@ namespace Project1.GameParts.GameStates
         private SchatkistCollision SCollision;
         private EnemyCollision ECollision;
 
+        private SpriteFont font;
+
         public Level2Game(ContentManager _content, GraphicsDevice _graphics, Game _game) : base(_content, _graphics, _game)
         {
             graphics = _graphics;
@@ -44,43 +46,34 @@ namespace Project1.GameParts.GameStates
 
             _camera = new Camera();
 
-            Texture2D _vis = content.Load<Texture2D>("spritesheet_fish");
-            vis = _vis;
+            vis = content.Load<Texture2D>("spritesheet_fish");
 
-            Texture2D _krab = content.Load<Texture2D>("krab");
-            krab = _krab;
+            krab = content.Load<Texture2D>("krab");
 
-            Texture2D _duiker = content.Load<Texture2D>("diver3");
-            duiker = _duiker;
+            duiker = content.Load<Texture2D>("diver3");
 
-            Texture2D _kwal = content.Load<Texture2D>("kwal");
-            kwal = _kwal;
+            kwal = content.Load<Texture2D>("kwal");
+ 
+            schat = content.Load<Texture2D>("treasure2");
+ 
+            levens = content.Load<Texture2D>("hart2");
+ 
+            ancher = content.Load<Texture2D>("anker");
 
-            Texture2D _schat = content.Load<Texture2D>("treasure2");
-            schat = _schat;
-
-            Texture2D _levens = content.Load<Texture2D>("hart2");
-            levens = _levens;
-
-            Texture2D _ancher = content.Load<Texture2D>("anker");
-            ancher = _ancher;
-
-            Texture2D _lijn = content.Load<Texture2D>("finishline");
-            lijn = _lijn;
-
-            Texture2D _achtergrond = content.Load<Texture2D>("oceaan");
-            achtergrond = _achtergrond;
-
+            lijn = content.Load<Texture2D>("finishline");
+ 
+            achtergrond = content.Load<Texture2D>("oceaan");
+ 
             SCollision = new SchatkistCollision();
             ECollision = new EnemyCollision();
 
+            font = content.Load<SpriteFont>("Font");
 
             InitializeGameObjects();
         }
 
         private void InitializeGameObjects()
-        {
-            
+        {            
             level2 = new Level2(_camera, vis, krab, duiker, kwal, ancher, schat, levens, lijn, achtergrond, SCollision, ECollision);
         }
 
@@ -96,11 +89,11 @@ namespace Project1.GameParts.GameStates
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: _camera.Volg);
-
             level2.Draw(spriteBatch);
-
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, Convert.ToString(SCollision.punten), new Vector2(Game.screenWidth - 100, Game.screenHeight / 2 - 210), Color.Black);
             spriteBatch.End();
+
         }
     }
 }

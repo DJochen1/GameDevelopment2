@@ -115,6 +115,7 @@ namespace Project1.Levels
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.Volg);
 
             foreach (var a in background)
                 a.Draw(_spriteBatch);
@@ -146,7 +147,7 @@ namespace Project1.Levels
 
             anker.Draw(_spriteBatch);
 
-
+            _spriteBatch.End();
         }
 
         public void Update(GameTime gameTime)
@@ -223,7 +224,7 @@ namespace Project1.Levels
             }
 
 
-            if (SCollision.punten == 30 && fish.positie.X > 6049)
+            if (SCollision.punten == 10 && fish.positie.X > 6049)
             {
                 LevelEnd = true;
             }

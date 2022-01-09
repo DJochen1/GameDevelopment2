@@ -21,7 +21,6 @@ namespace Project1.Components
             AnkerTexture = texture;
 
             AnkerPositie = new Vector2(750, 0);
-
         }
 
         public Rectangle Rectangle
@@ -30,8 +29,7 @@ namespace Project1.Components
         }
 
         public void Update(GameTime gameTime)
-        {
-            
+        {            
         }
 
         public void Draw(SpriteBatch spriteBatch)

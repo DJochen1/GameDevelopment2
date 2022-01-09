@@ -16,7 +16,6 @@ namespace Project1.Levels
 {
     public class Level1 : ILevel
     {
-
         public bool LevelEnd = false;
         public bool Loser = false;
 
@@ -42,6 +41,7 @@ namespace Project1.Levels
 
         SchatkistCollision SCollision;
         EnemyCollision ECollision;
+
 
         public Level1(Camera _camera, Texture2D _fish, Texture2D _crab, Texture2D _diver, Texture2D _jellyfish, Texture2D _anker, Texture2D _treasure, Texture2D _lifes, Texture2D _finish, Texture2D _background, SchatkistCollision _SCollision, EnemyCollision _ECollision)
         {
@@ -74,7 +74,6 @@ namespace Project1.Levels
                 {
                     kwalPositie = new Vector2 (5750, 0)
                 }
-
             };
 
             treasure = new List<Treasure>();
@@ -106,6 +105,8 @@ namespace Project1.Levels
 
         public void Draw(SpriteBatch _spriteBatch)
         {
+            _spriteBatch.Begin(SpriteSortMode.FrontToBack, transformMatrix: camera.Volg);
+
             foreach (var a in background)
                 a.Draw(_spriteBatch);
 
@@ -128,6 +129,7 @@ namespace Project1.Levels
 
             anker.Draw(_spriteBatch);
 
+            _spriteBatch.End();            
         }
 
         public void Update(GameTime gameTime)
@@ -144,8 +146,6 @@ namespace Project1.Levels
             foreach (var a in treasure)
                 a.Update(gameTime);
 
-
-
             foreach (var a in jellyfish)
                 a.Update(gameTime);
 
@@ -154,7 +154,6 @@ namespace Project1.Levels
                 a.Update(gameTime);
                 a.hartPositie.X = fish.positie.X - 71;
             }
-
 
             fish.Update(gameTime);
 
@@ -175,7 +174,7 @@ namespace Project1.Levels
             {
                 if (treasure[i].remove)
                 {
-                    treasure.RemoveAt(i);
+                    treasure.RemoveAt(i);                    
                 }
             }
 
@@ -196,9 +195,8 @@ namespace Project1.Levels
                 fish.death = false;
             }
 
-            //De || is voor testing purposes, later terug vervangen door &&
-            if (SCollision.punten == 15 || fish.positie.X > 6050)
-            {
+            if (SCollision.punten == 10 && fish.positie.X > 6050)
+            { 
                 LevelEnd = true;
             }
         }

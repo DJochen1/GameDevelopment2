@@ -8,7 +8,5 @@ namespace Project1.Input
     public interface IInputReader
     {
         public Vector2 ReadInput();
-        
-
     }
 }

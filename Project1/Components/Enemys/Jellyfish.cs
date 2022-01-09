@@ -14,8 +14,10 @@ namespace Project1.Components.Enemys
     {
         private Texture2D kwalTexture;
         private Animatie kwalAnimatie;
+
         public Vector2 kwalPositie { get; set; }
         private Vector2 crabSnelheid;
+
         public Vector2 snelheid = new Vector2(0, 1.5f);
 
         public Jellyfish(Texture2D texture)
@@ -38,8 +40,6 @@ namespace Project1.Components.Enemys
             kwalAnimatie.AddFrame(new AnimationFrame(new Rectangle(0, 0, 100, 139)));
 
             kwalPositie = new Vector2(3000, 0);
-
-
         }
 
         public Rectangle Rectangle
@@ -57,10 +57,8 @@ namespace Project1.Components.Enemys
             kwalPositie += crabSnelheid;
         }
 
-
         public void Update(GameTime gameTime)
         {
-
             Move();
 
             kwalAnimatie.Update(gameTime);

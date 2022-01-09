@@ -15,20 +15,15 @@ namespace Project1.Components
         private Texture2D hartTexture;
         public Vector2 hartPositie;
 
-
         public Lifes(Texture2D texture, Vector2 positie)
         {
             hartTexture = texture;
             hartPositie = positie;
         }
 
-
-
         public void Update(GameTime gameTime)
-        {
-            
+        {            
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {

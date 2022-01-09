@@ -13,9 +13,7 @@ namespace Project1.Collision
 {
     public class SchatkistCollision : CollisionManager
     {
-
         public int punten = 0;
-
 
         public void Collision(List<Treasure> schatten, Fish fish)
         {
@@ -25,7 +23,6 @@ namespace Project1.Collision
                     punten += 1;
                     kist.remove = true;
                 }
-
         }
     }
 }

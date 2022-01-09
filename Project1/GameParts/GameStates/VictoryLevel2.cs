@@ -10,7 +10,7 @@ namespace Project1.GameParts.GameStates
 {
     public class VictoryLevel2 : GameState
     {
-        //Button buttonMainMenu;
+        Button buttonMainMenu;
         Button buttonQuit;
 
         MenuBackground winnerLevel2;
@@ -20,18 +20,18 @@ namespace Project1.GameParts.GameStates
             graphics = _graphics;
             game = _game;
 
-            //Texture2D textureMainMenu = content.Load<Texture2D>("buttonMenu");
-            Texture2D textureQuit = content.Load<Texture2D>("Quit");
-
             Texture2D textureWinnerLevel2 = content.Load<Texture2D>("Level2Cleared");
 
-            /*buttonMainMenu = new Button(textureMainMenu, graphics);
-            buttonMainMenu.SetPosition(new Vector2(Game.screenWidth / 2 - 60, Game.screenHeight / 2 -100))*/
-
-            buttonQuit = new Button(textureQuit, graphics);
-            buttonQuit.SetPosition(new Vector2(Game.screenWidth / 2 - 60, Game.screenHeight / 2 + 66));
+            Texture2D textureMainMenu = content.Load<Texture2D>("buttonMenu");
+            Texture2D textureQuit = content.Load<Texture2D>("Quit");
 
             winnerLevel2 = new MenuBackground(textureWinnerLevel2);
+
+            buttonMainMenu = new Button(textureMainMenu, graphics);
+            buttonMainMenu.SetPosition(new Vector2(Game.screenWidth / 2 - 160, Game.screenHeight / 2 - 60));
+
+            buttonQuit = new Button(textureQuit, graphics);
+            buttonQuit.SetPosition(new Vector2(Game.screenWidth / 2, Game.screenHeight / 2 - 60));
         }
 
 
@@ -40,11 +40,11 @@ namespace Project1.GameParts.GameStates
             game.IsMouseVisible = true;
             MouseState mouse = Mouse.GetState();
 
-            /*if (buttonMainMenu.isClicked)
+            if (buttonMainMenu.isClicked)
             {
                 game.ChangeState(new MainMenu(content, graphics, game));
             }
-            buttonMainMenu.Update(mouse);*/
+            buttonMainMenu.Update(mouse);
 
             if (buttonQuit.isClicked)
             {
@@ -56,7 +56,7 @@ namespace Project1.GameParts.GameStates
         public override void Draw(SpriteBatch spriteBatch)
         {
             winnerLevel2.Draw(spriteBatch);
-            //buttonMainMenu.Draw(spriteBatch);
+            buttonMainMenu.Draw(spriteBatch);
             buttonQuit.Draw(spriteBatch);
         }
     }

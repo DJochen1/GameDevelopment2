@@ -15,11 +15,12 @@ namespace Project1.Components.Enemys
     {
         private Texture2D crabTexture;
         private Animatie crabAnimatie;
+
         public Vector2 crabPositie;
         private Vector2 crabSnelheid;
+
         public int MaxPositieLinks = 700;
         public int MaxPositieRechts = 1100;
-
 
         public Crab(Texture2D texture)
         {
@@ -40,8 +41,6 @@ namespace Project1.Components.Enemys
             crabAnimatie.AddFrame(new AnimationFrame(new Rectangle(665, 260, 133, 128)));
 
             crabPositie = new Vector2(699, 350);
-
-
         }
 
         public Rectangle Rectangle
@@ -59,7 +58,6 @@ namespace Project1.Components.Enemys
             crabPositie += crabSnelheid;
         }
         
-
         public void Update(GameTime gameTime)
         {
 

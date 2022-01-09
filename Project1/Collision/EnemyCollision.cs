@@ -38,7 +38,6 @@ namespace Project1.Collision
                 {
                     fish.death = true;
                 }
-
         }
 
         public void TouchAnkerCheck(Anker anker, Fish fish)
