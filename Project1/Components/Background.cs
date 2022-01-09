@@ -35,26 +35,5 @@ namespace Project1.Components
             spriteBatch.Draw(BackgroundTexture, BackgroundPositie, null, Color.White, 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0.2f);
         }
 
-        /*public Vector2 BackgroundPositie;
-
-        private Texture2D backgroundTexture;
-        Rectangle rectangle = new Rectangle(0, 0, Game.screenWidth, Game.screenHeight);
-        Color colour = new Color(255, 255, 255, 255);
-
-        public Background(Texture2D texture)
-        {
-            backgroundTexture = texture;
-        }
-
-        public void Update(GameTime gameTime)
-        {
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            //spriteBatch.Begin();
-            spriteBatch.Draw(backgroundTexture, rectangle, colour);
-            //spriteBatch.End();
-        }*/
     }
 }
